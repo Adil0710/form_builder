@@ -118,6 +118,7 @@ export function FormBuilder() {
     })
 
     console.log("Form JSON:", JSON.stringify(formData, null, 2))
+    console.log("Form JSON:", formData)
   }
 
   const handlePreviewForm = () => {
