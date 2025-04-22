@@ -248,7 +248,7 @@ export function MobilePreview() {
   }
 
   return (
-    <div className="w-64 h-[500px] border rounded-[20px] overflow-hidden flex flex-col bg-background shadow-md">
+    <div className="w-64 h-[500px] border rounded-[20px] overflow-hidden flex flex-col bg-background shadow-md mt-5">
       <div className="h-6 bg-muted flex items-center justify-center rounded-t-[20px]">
         <div className="w-20 h-2 bg-background rounded-full" />
       </div>

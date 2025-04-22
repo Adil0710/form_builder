@@ -140,7 +140,7 @@ export function FormBuilder() {
   return (
     <div className="flex flex-col h-screen">
       <header className="border-b">
-        <div className="container flex items-center justify-between h-16">
+        <div className="container flex items-center justify-between h-16 pl-16">
           <h1 className="text-xl font-bold">Form Builder</h1>
           <div className="flex items-center gap-4">
             <Button variant="outline" size="icon" onClick={() => setTheme(theme === "dark" ? "light" : "dark")}>
