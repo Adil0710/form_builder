@@ -113,6 +113,8 @@ export function PropertiesPanel() {
                     value={selectedElement.properties.description || ""}
                     onChange={(e) => updateElementProperty(selectedElement.id, "description", e.target.value)}
                     placeholder="Enter description"
+                    className=" resize-none"
+                    rows={5}
                   />
                 </div>
               )}

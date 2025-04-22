@@ -320,7 +320,7 @@ export default function FormRenderer() {
           <div className="space-y-1" key={element.id}>
             <h2 className="text-4xl font-bold">{element.properties.label || "Header"}</h2>
             {element.properties.description && (
-              <p className="text-muted-foreground">{element.properties.description}</p>
+              <p className="text-muted-foreground">{element.properties.description === "Add a description here" && ""}</p>
             )}
           </div>
         )

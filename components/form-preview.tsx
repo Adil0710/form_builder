@@ -175,7 +175,7 @@ function FormElementPreview({ element }: { element: FormElement }) {
             <Input id={element.id} type="file" accept="image/*" disabled  className=" w-[90%]"/>
           </div>
         )
-      case "header1":
+      case "header 1":
         return (
           <div className="space-y-1 w-[90%]" >
             <h2 className="text-4xl font-bold break-words">{element.properties.label || "Header 1"}</h2>
@@ -184,7 +184,7 @@ function FormElementPreview({ element }: { element: FormElement }) {
             )}
           </div>
         )
-        case "header2":
+        case "header 2":
         return (
           <div className="space-y-1 w-[90%]">
             <h2 className="text-3xl font-bold break-words">{element.properties.label || "Header 2"}</h2>
@@ -193,7 +193,7 @@ function FormElementPreview({ element }: { element: FormElement }) {
             )}
           </div>
         )
-        case "header3":
+        case "header 3":
           return (
             <div className="space-y-1 w-[90%]">
               <h2 className="text-2xl font-bold break-words">{element.properties.label || "Header 2"}</h2>
@@ -202,7 +202,7 @@ function FormElementPreview({ element }: { element: FormElement }) {
               )}
             </div>
           )
-          case "header4":
+          case "header 4":
             return (
               <div className="space-y-1 w-[90%]">
                 <h2 className="text-xl font-bold break-words">{element.properties.label || "Header 2"}</h2>
@@ -211,7 +211,7 @@ function FormElementPreview({ element }: { element: FormElement }) {
                 )}
               </div>
             )
-            case "header5":
+            case "header 5":
               return (
                 <div className="space-y-1 w-[90%]">
                   <h2 className="text-lg font-bold break-words">{element.properties.label || "Header 2"}</h2>
