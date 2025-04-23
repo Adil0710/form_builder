@@ -306,6 +306,27 @@ export default function FormRenderer() {
             />
           </div>
         );
+      case "email":
+        return (
+          <div className="space-y-1" key={element.id}>
+            <Label htmlFor={`preview-${element.id}`}>
+              {element.properties.label || "Email Id"}
+              {element.properties.required && (
+                <span className="text-destructive ml-1">*</span>
+              )}
+            </Label>
+            <Input
+              id={`preview-${element.id}`}
+              name={`preview-${element.id}`}
+              placeholder={element.properties.placeholder || "Enter email id"}
+              className="h-8 text-xs"
+              required={element.properties.required}
+              value={formValues[element.id] || ""}
+              onChange={(e) => handleInputChange(element.id, e.target.value)}
+              type="email"
+            />
+          </div>
+        );
       case "url":
         return (
           <div className="space-y-2" key={element.id}>

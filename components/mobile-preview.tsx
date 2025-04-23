@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CalendarIcon } from 'lucide-react';
+import { CalendarIcon } from "lucide-react";
 
 import type { FormElement } from "@/lib/types";
 import { useFormBuilderStore } from "@/lib/store";
@@ -70,7 +70,7 @@ export function MobilePreview() {
               id={`preview-${element.id}`}
               placeholder={element.properties.placeholder || "Enter text"}
               className="h-8 text-xs"
-            /> 
+            />
           </div>
         );
       case "textarea":
@@ -219,6 +219,23 @@ export function MobilePreview() {
             />
           </div>
         );
+      case "email":
+        return (
+          <div className="space-y-2">
+            <Label htmlFor={element.id} className="text-xs">
+              {element.properties.label || "Email Id"}
+              {element.properties.required && (
+                <span className="text-destructive ml-1">*</span>
+              )}
+            </Label>
+            <Input
+              id={element.id}
+              type="email"
+              placeholder={element.properties.placeholder || "Enter email id"}
+              className="w-[90%]"
+            />
+          </div>
+        );
       case "url":
         return (
           <div className="space-y-1" key={element.id}>
@@ -271,7 +288,8 @@ export function MobilePreview() {
             {element.properties.multiple && (
               <p className="text-[10px] text-muted-foreground mt-1">
                 Max: {element.properties.maxFiles || "unlimited"} files
-                {element.properties.maxSize && `, ${element.properties.maxSize}MB each`}
+                {element.properties.maxSize &&
+                  `, ${element.properties.maxSize}MB each`}
               </p>
             )}
           </div>
@@ -285,40 +303,42 @@ export function MobilePreview() {
                 <span className="text-destructive ml-1">*</span>
               )}
             </Label>
-             <SignaturePad />
+            <SignaturePad />
           </div>
         );
-        case "header": {
-          type HeaderSize = "1" | "2" | "3" | "4" | "5"
-        
-          const sizeClasses: Record<HeaderSize, string> = {
-            "1": "text-4xl",
-            "2": "text-3xl",
-            "3": "text-2xl",
-            "4": "text-xl",
-            "5": "text-lg",
-          }
-        
-          const rawSize = element?.properties?.size ?? "1"
-        
-          // Validate that the size is one of the allowed keys
-          const headerSize: HeaderSize = ["1", "2", "3", "4", "5"].includes(rawSize)
-            ? (rawSize as HeaderSize)
-            : "1"
-        
-          return (
-            <div className="space-y-1 w-[90%]" key={headerSize}>
-              <h2 className={`${sizeClasses[headerSize]} font-bold break-words`}>
-                {element.properties.label || "Header"}
-              </h2>
-              {element.properties.description && (
-                <p className="text-muted-foreground text-sm">
-                  {element.properties.description}
-                </p>
-              )}
-            </div>
-          )
-        }
+      case "header": {
+        type HeaderSize = "1" | "2" | "3" | "4" | "5";
+
+        const sizeClasses: Record<HeaderSize, string> = {
+          "1": "text-4xl",
+          "2": "text-3xl",
+          "3": "text-2xl",
+          "4": "text-xl",
+          "5": "text-lg",
+        };
+
+        const rawSize = element?.properties?.size ?? "1";
+
+        // Validate that the size is one of the allowed keys
+        const headerSize: HeaderSize = ["1", "2", "3", "4", "5"].includes(
+          rawSize
+        )
+          ? (rawSize as HeaderSize)
+          : "1";
+
+        return (
+          <div className="space-y-1 w-[90%]" key={headerSize}>
+            <h2 className={`${sizeClasses[headerSize]} font-bold break-words`}>
+              {element.properties.label || "Header"}
+            </h2>
+            {element.properties.description && (
+              <p className="text-muted-foreground text-sm">
+                {element.properties.description}
+              </p>
+            )}
+          </div>
+        );
+      }
       default:
         return <div key={element.id}>Unknown element type</div>;
     }

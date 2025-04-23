@@ -128,6 +128,19 @@ function FormElementPreview({ element }: { element: FormElement }) {
             />
           </div>
         )
+        case "email":
+        return (
+          <div className="space-y-2">
+            <Label htmlFor={element.id}>{element.properties.label || "Email Id"}</Label>
+            <Input
+              id={element.id}
+              type="email"
+              placeholder={element.properties.placeholder || "Enter email id"}
+              disabled
+              className="w-[90%]"
+            />
+          </div>
+        )
       case "url":
         return (
           <div className="space-y-2">

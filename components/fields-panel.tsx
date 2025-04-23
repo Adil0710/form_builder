@@ -15,6 +15,7 @@ import {
   Type,
   LinkIcon as Url,
   PenLine,
+  Mail,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -58,6 +59,7 @@ export function FieldsPanel() {
     { id: "new-radio", label: "Radio Group", icon: <Radio className="h-4 w-4" /> },
     { id: "new-date", label: "Date Picker", icon: <CalendarIcon className="h-4 w-4" /> },
     { id: "new-phone", label: "Phone Number", icon: <Phone className="h-4 w-4" /> },
+    { id: "new-email", label: "Email Id", icon: <Mail className="h-4 w-4" /> },
     { id: "new-url", label: "URL", icon: <Url className="h-4 w-4" /> },
     { id: "new-file", label: "File Upload", icon: <FileText className="h-4 w-4" /> },
     { id: "new-image", label: "Image Upload", icon: <ImageIcon className="h-4 w-4" /> },
