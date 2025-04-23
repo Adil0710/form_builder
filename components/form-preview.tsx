@@ -196,7 +196,7 @@ function FormElementPreview({ element }: { element: FormElement }) {
         case "header 3":
           return (
             <div className="space-y-1 w-[90%]">
-              <h2 className="text-2xl font-bold break-words">{element.properties.label || "Header 2"}</h2>
+              <h2 className="text-2xl font-bold break-words">{element.properties.label || "Header 3"}</h2>
               {element.properties.description && (
                 <p className="text-muted-foreground text-sm">{element.properties.description}</p>
               )}
@@ -205,7 +205,7 @@ function FormElementPreview({ element }: { element: FormElement }) {
           case "header 4":
             return (
               <div className="space-y-1 w-[90%]">
-                <h2 className="text-xl font-bold break-words">{element.properties.label || "Header 2"}</h2>
+                <h2 className="text-xl font-bold break-words">{element.properties.label || "Header 4"}</h2>
                 {element.properties.description && (
                   <p className="text-muted-foreground text-sm">{element.properties.description}</p>
                 )}
@@ -214,7 +214,7 @@ function FormElementPreview({ element }: { element: FormElement }) {
             case "header 5":
               return (
                 <div className="space-y-1 w-[90%]">
-                  <h2 className="text-lg font-bold break-words">{element.properties.label || "Header 2"}</h2>
+                  <h2 className="text-lg font-bold break-words">{element.properties.label || "Header 5"}</h2>
                   {element.properties.description && (
                     <p className="text-muted-foreground text-sm">{element.properties.description}</p>
                   )}

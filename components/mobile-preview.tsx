@@ -197,46 +197,46 @@ export function MobilePreview() {
             <Input id={`preview-${element.id}`} type="file" accept="image/*" className="h-8 text-xs" />
           </div>
         )
-      case "header1":
+      case "header 1":
         return (
           <div className="space-y-0.5" key={element.id}>
-            <h2 className="text-3xl font-bold">{element.properties.label || "Header"}</h2>
+            <h2 className="text-3xl font-bold">{element.properties.label || "Header 1"}</h2>
             {element.properties.description && (
               <p className="text-xs text-muted-foreground">{element.properties.description}</p>
             )}
           </div>
         )
-        case "header2":
+        case "header 2":
         return (
           <div className="space-y-0.5" key={element.id}>
-            <h2 className="text-2xl font-bold">{element.properties.label || "Header"}</h2>
+            <h2 className="text-2xl font-bold">{element.properties.label || "Header 2"}</h2>
             {element.properties.description && (
               <p className="text-xs text-muted-foreground">{element.properties.description}</p>
             )}
           </div>
         )
-        case "header3":
+        case "header 3":
           return (
             <div className="space-y-0.5" key={element.id}>
-              <h2 className="text-xl font-bold">{element.properties.label || "Header"}</h2>
+              <h2 className="text-xl font-bold">{element.properties.label || "Header 3"}</h2>
               {element.properties.description && (
                 <p className="text-xs text-muted-foreground">{element.properties.description}</p>
               )}
             </div>
           )
-          case "header4":
+          case "header 4":
             return (
               <div className="space-y-0.5" key={element.id}>
-                <h2 className="text-lg font-bold">{element.properties.label || "Header"}</h2>
+                <h2 className="text-lg font-bold">{element.properties.label || "Header 4"}</h2>
                 {element.properties.description && (
                   <p className="text-xs text-muted-foreground">{element.properties.description}</p>
                 )}
               </div>
             )
-            case "header5":
+            case "header 5":
               return (
                 <div className="space-y-0.5" key={element.id}>
-                  <h2 className="text-base font-bold">{element.properties.label || "Header"}</h2>
+                  <h2 className="text-base font-bold">{element.properties.label || "Header 5"}</h2>
                   {element.properties.description && (
                     <p className="text-xs text-muted-foreground">{element.properties.description}</p>
                   )}
