@@ -410,7 +410,7 @@ export default function FormRenderer() {
                 <span className="text-destructive ml-1">*</span>
               )}
             </Label>
-            <SignaturePad />
+            <SignaturePad className=" h-32"/>
           </div>
         );
       case "header": {

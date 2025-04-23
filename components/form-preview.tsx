@@ -389,7 +389,7 @@ export function FormPreview() {
 
   return (
     <div className="flex-1 p-4 bg-muted/10">
-      <div className="max-w-2xl">
+      <div className="max-w-2xl mx-auto">
         <div className="bg-card rounded-lg shadow-sm border p-4 mb-4">
           <input
             id="form-title"
