@@ -14,6 +14,7 @@ import {
   Radio,
   Type,
   LinkIcon as Url,
+  PenLine,
 } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -47,14 +48,9 @@ function FieldItem({ id, label, icon }: FieldItemProps) {
   )
 }
 
-
 export function FieldsPanel() {
   const fields = [
-    { id: "new-header_1", label: "Header 1", icon: <Type className="h-4 w-4" strokeWidth={5.5}/> },
-    { id: "new-header_2", label: "Header 2", icon: <Type className="h-4 w-4 font-bold" strokeWidth={4.5} /> },
-    { id: "new-header_3", label: "Header 3", icon: <Type className="h-4 w-4 font-bold" strokeWidth={3.5}/> },
-    { id: "new-header_4", label: "Header 4", icon: <Type className="h-4 w-4 font-bold" strokeWidth={2.5}/> },
-    { id: "new-header_5", label: "Header 5", icon: <Type className="h-4 w-4 font-bold" /> },
+    { id: "new-header", label: "Header", icon: <Type className="h-4 w-4" /> },
     { id: "new-input", label: "Text Input", icon: <FormInput className="h-4 w-4" /> },
     { id: "new-textarea", label: "Text Area", icon: <FileText className="h-4 w-4" /> },
     { id: "new-checkbox", label: "Checkbox", icon: <CheckSquare className="h-4 w-4" /> },
@@ -65,6 +61,7 @@ export function FieldsPanel() {
     { id: "new-url", label: "URL", icon: <Url className="h-4 w-4" /> },
     { id: "new-file", label: "File Upload", icon: <FileText className="h-4 w-4" /> },
     { id: "new-image", label: "Image Upload", icon: <ImageIcon className="h-4 w-4" /> },
+    { id: "new-signature", label: "Signature", icon: <PenLine className="h-4 w-4" /> },
   ]
 
   return (

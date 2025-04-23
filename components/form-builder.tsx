@@ -16,7 +16,7 @@ import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import { MoonIcon, SunIcon, ExternalLink, Trash2, X } from "lucide-react";
 
 import { useFormBuilderStore } from "@/lib/store";
-import { useTheme } from "@/components/theme-provider";
+
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -42,11 +42,12 @@ import {
   AlertDialogTrigger,
 } from "./ui/alert-dialog";
 import { PreviewPanel } from "./preview-panel";
+import { ModeToggle } from "./mode-toggle";
 
 export function FormBuilder() {
   const { toast } = useToast();
   const router = useRouter();
-  const { setTheme, theme } = useTheme();
+
   const {
     activeId,
     setActiveId,
@@ -225,18 +226,7 @@ export function FormBuilder() {
             >
               Form Settings
             </Button>
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-            >
-              {theme === "dark" ? (
-                <SunIcon className="h-4 w-4" />
-              ) : (
-                <MoonIcon className="h-4 w-4" />
-              )}
-              <span className="sr-only">Toggle theme</span>
-            </Button>
+            <ModeToggle />
             <Button variant="outline" onClick={handlePreviewForm}>
               <ExternalLink className="h-4 w-4 mr-2" />
               Preview Form
@@ -256,8 +246,11 @@ export function FormBuilder() {
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                   <AlertDialogCancel>Cancel</AlertDialogCancel>
-                  <AlertDialogAction onClick={handleClearForm} className="bg-red-500 hover:bg-red-400">
-                   Clear
+                  <AlertDialogAction
+                    onClick={handleClearForm}
+                    className="bg-red-500 hover:bg-red-400"
+                  >
+                    Clear
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -335,11 +328,12 @@ export function FormBuilder() {
           <Separator orientation="vertical" />
           <PropertiesPanel />
           <Separator orientation="vertical" />
-          <PreviewPanel/>
+          <PreviewPanel />
           <DragOverlay>
             {activeId && activeId.toString().startsWith("new-") && (
-              <div className="bg-background border rounded-md p-4 shadow-md w-64">
-                {activeId.toString().replace("new-", "").replace("_", " ")} Field
+              <div className="bg-background border rounded-md p-4 shadow-md w-64 capitalize">
+                {activeId.toString().replace("new-", "").replace("_", " ")}{" "}
+                Field
               </div>
             )}
           </DragOverlay>

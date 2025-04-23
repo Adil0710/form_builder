@@ -4,6 +4,10 @@ export interface FormElementProperties {
   required?: boolean
   options?: string[]
   description?: string
+  size?: string
+  multiple?: boolean
+  maxFiles?: string
+  maxSize?: string
   [key: string]: any
 }
 

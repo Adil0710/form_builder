@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon } from 'lucide-react';
 
 import type { FormElement } from "@/lib/types";
 import { useFormBuilderStore } from "@/lib/store";
@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
+import SignaturePad from "./signature-pad";
 
 export function MobilePreview() {
   const formTabs = useFormBuilderStore((state) => state.formTabs);
@@ -28,7 +29,7 @@ export function MobilePreview() {
     (!useTabs && formElements.length === 0)
   ) {
     return (
-      <div className=" p-4 flex justify-center items-center">
+      <div className="p-4 flex justify-center items-center">
         <div className="w-64 h-[500px] border rounded-[20px] overflow-hidden flex flex-col bg-background shadow-md mt-5">
           <div className="h-6 bg-muted flex items-center justify-center rounded-t-[20px]">
             <div className="w-20 h-2 bg-background rounded-full" />
@@ -69,7 +70,7 @@ export function MobilePreview() {
               id={`preview-${element.id}`}
               placeholder={element.properties.placeholder || "Enter text"}
               className="h-8 text-xs"
-            />
+            /> 
           </div>
         );
       case "textarea":
@@ -207,7 +208,7 @@ export function MobilePreview() {
               }
               className="h-8 text-xs"
               maxLength={10}
-              type="text" //
+              type="text"
               onInput={(e) => {
                 const input = e.target as HTMLInputElement;
                 input.value = input.value.replace(/\D/g, ""); // Remove non-numeric characters
@@ -264,82 +265,67 @@ export function MobilePreview() {
               id={`preview-${element.id}`}
               type="file"
               accept="image/*"
+              multiple={element.properties.multiple}
               className="h-8 text-xs"
             />
-          </div>
-        );
-      case "header 1":
-        return (
-          <div className="space-y-0.5" key={element.id}>
-            <h2 className="text-3xl font-bold">
-              {element.properties.label || "Header 1"}
-            </h2>
-            {element.properties.description && (
-              <p className="text-xs text-muted-foreground">
-                {element.properties.description}
+            {element.properties.multiple && (
+              <p className="text-[10px] text-muted-foreground mt-1">
+                Max: {element.properties.maxFiles || "unlimited"} files
+                {element.properties.maxSize && `, ${element.properties.maxSize}MB each`}
               </p>
             )}
           </div>
         );
-      case "header 2":
+      case "signature":
         return (
-          <div className="space-y-0.5" key={element.id}>
-            <h2 className="text-2xl font-bold">
-              {element.properties.label || "Header 2"}
-            </h2>
-            {element.properties.description && (
-              <p className="text-xs text-muted-foreground">
-                {element.properties.description}
-              </p>
-            )}
+          <div className="space-y-1" key={element.id}>
+            <Label htmlFor={`preview-${element.id}`} className="text-xs">
+              {element.properties.label || "Signature"}
+              {element.properties.required && (
+                <span className="text-destructive ml-1">*</span>
+              )}
+            </Label>
+             <SignaturePad />
           </div>
         );
-      case "header 3":
-        return (
-          <div className="space-y-0.5" key={element.id}>
-            <h2 className="text-xl font-bold">
-              {element.properties.label || "Header 3"}
-            </h2>
-            {element.properties.description && (
-              <p className="text-xs text-muted-foreground">
-                {element.properties.description}
-              </p>
-            )}
-          </div>
-        );
-      case "header 4":
-        return (
-          <div className="space-y-0.5" key={element.id}>
-            <h2 className="text-lg font-bold">
-              {element.properties.label || "Header 4"}
-            </h2>
-            {element.properties.description && (
-              <p className="text-xs text-muted-foreground">
-                {element.properties.description}
-              </p>
-            )}
-          </div>
-        );
-      case "header 5":
-        return (
-          <div className="space-y-0.5" key={element.id}>
-            <h2 className="text-base font-bold">
-              {element.properties.label || "Header 5"}
-            </h2>
-            {element.properties.description && (
-              <p className="text-xs text-muted-foreground">
-                {element.properties.description}
-              </p>
-            )}
-          </div>
-        );
+        case "header": {
+          type HeaderSize = "1" | "2" | "3" | "4" | "5"
+        
+          const sizeClasses: Record<HeaderSize, string> = {
+            "1": "text-4xl",
+            "2": "text-3xl",
+            "3": "text-2xl",
+            "4": "text-xl",
+            "5": "text-lg",
+          }
+        
+          const rawSize = element?.properties?.size ?? "1"
+        
+          // Validate that the size is one of the allowed keys
+          const headerSize: HeaderSize = ["1", "2", "3", "4", "5"].includes(rawSize)
+            ? (rawSize as HeaderSize)
+            : "1"
+        
+          return (
+            <div className="space-y-1 w-[90%]" key={headerSize}>
+              <h2 className={`${sizeClasses[headerSize]} font-bold break-words`}>
+                {element.properties.label || "Header"}
+              </h2>
+              {element.properties.description && (
+                <p className="text-muted-foreground text-sm">
+                  {element.properties.description}
+                </p>
+              )}
+            </div>
+          )
+        }
       default:
         return <div key={element.id}>Unknown element type</div>;
     }
   };
 
   return (
-    <div className=" p-4 flex justify-center items-center">
+    <div className="p-4 flex justify-center items-center">
       <div className="w-64 h-[500px] border rounded-[20px] overflow-hidden flex flex-col bg-background shadow-md mt-5">
         <div className="h-6 bg-muted flex items-center justify-center rounded-t-[20px]">
           <div className="w-20 h-2 bg-background rounded-full" />

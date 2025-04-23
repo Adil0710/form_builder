@@ -129,8 +129,9 @@ export const useFormBuilderStore = create<FormBuilderState>((set, get) => ({
     }
 
     // Add default description property for headers
-    if (type.startsWith("header")) {
+    if (type === "header") {
       newElement.properties.description = "Add a description here"
+      newElement.properties.size = "1" // Default to largest header
     }
 
     set((state) => {
