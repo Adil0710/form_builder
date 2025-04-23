@@ -23,5 +23,8 @@ export interface FormTab {
 export interface FormData {
   id: string
   title: string
+  description?: string
   tabs: FormTab[]
+  elements?: FormElement[] // For single-page forms without tabs
+  useTabs: boolean
 }

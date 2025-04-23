@@ -9,6 +9,10 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@dnd-kit/core": "latest",
+    "@dnd-kit/modifiers": "latest",
+    "@dnd-kit/sortable": "latest",
+    "@dnd-kit/utilities": "latest",
     "@hookform/resolvers": "^3.9.1",
     "@radix-ui/react-accordion": "1.2.2",
     "@radix-ui/react-alert-dialog": "1.1.4",
@@ -43,8 +47,10 @@
     "cmdk": "1.0.4",
     "date-fns": "4.1.0",
     "embla-carousel-react": "8.5.1",
+    "immer": "latest",
     "input-otp": "1.4.1",
     "lucide-react": "^0.454.0",
+    "motion": "^12.7.4",
     "next": "15.2.4",
     "next-themes": "^0.4.4",
     "react": "^19",
@@ -56,16 +62,11 @@
     "sonner": "^1.7.1",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
+    "use-sync-external-store": "latest",
+    "uuid": "latest",
     "vaul": "^0.9.6",
     "zod": "^3.24.1",
-    "@dnd-kit/core": "latest",
-    "immer": "latest",
-    "use-sync-external-store": "latest",
-    "@dnd-kit/modifiers": "latest",
-    "@dnd-kit/sortable": "latest",
-    "@dnd-kit/utilities": "latest",
-    "zustand": "latest",
-    "uuid": "latest"
+    "zustand": "latest"
   },
   "devDependencies": {
     "@types/node": "^22",

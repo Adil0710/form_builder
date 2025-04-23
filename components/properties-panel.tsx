@@ -1,3 +1,5 @@
+
+
 "use client"
 
 import { useState } from "react"
@@ -18,8 +20,8 @@ import { MobilePreview } from "./mobile-preview"
 export function PropertiesPanel() {
   const { updateElementProperty } = useFormBuilderStore()
   const [newOption, setNewOption] = useState("")
-  const [activeTab, setActiveTab] = useState("properties")
 
+ 
   // Find the selected element using a more stable approach
   const selectedElementId = useFormBuilderStore((state) => state.selectedElementId)
   const findElementById = useFormBuilderStore((state) => state.findElementById)
@@ -33,18 +35,11 @@ export function PropertiesPanel() {
       <div className="w-80 border-l bg-muted/20">
         <div className="p-4 font-medium">Properties</div>
         <Separator />
-        <Tabs defaultValue="properties" className="w-full">
-          <TabsList className="grid grid-cols-2 mx-4 mt-2">
-            <TabsTrigger value="properties">Properties</TabsTrigger>
-            <TabsTrigger value="preview">Preview</TabsTrigger>
-          </TabsList>
-          <TabsContent value="properties" className="p-4">
-            <div className="text-sm text-muted-foreground">Select an element to edit its properties</div>
-          </TabsContent>
-          <TabsContent value="preview" className="p-4">
-            <MobilePreview />
-          </TabsContent>
-        </Tabs>
+       <div className=" flex justify-center items-center w-full h-[76%]">
+       <div className="text-sm text-muted-foreground text-center">Select an element to edit its properties</div>
+       </div>
+            
+          
       </div>
     )
   }
@@ -67,15 +62,7 @@ export function PropertiesPanel() {
     <div className="w-80 border-l bg-muted/20">
       <div className="p-4 font-medium">Properties</div>
       <Separator />
-      <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-        <TabsList className="grid grid-cols-2 mx-4 mt-2">
-          <TabsTrigger value="properties">Properties</TabsTrigger>
-          <TabsTrigger value="preview">
-            <Smartphone className="h-4 w-4 mr-2" />
-            Preview
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="properties" className="p-0">
+     
           <ScrollArea className="h-[calc(100vh-10rem)]">
             <div className="p-4 space-y-4">
               <div className="space-y-2">
@@ -172,11 +159,16 @@ export function PropertiesPanel() {
               )}
             </div>
           </ScrollArea>
-        </TabsContent>
-        <TabsContent value="preview" className="p-4 flex justify-center">
+        
           <MobilePreview />
-        </TabsContent>
-      </Tabs>
+    
+    
     </div>
   )
 }
+
+
+
+
+
+

@@ -31,8 +31,8 @@ export default function FormRenderer() {
         const parsedForm = JSON.parse(savedForm)
         setFormData(parsedForm)
 
-        // Set the first tab as active
-        if (parsedForm.tabs && parsedForm.tabs.length > 0) {
+        // Set the first tab as active if using tabs
+        if (parsedForm.useTabs && parsedForm.tabs && parsedForm.tabs.length > 0) {
           setActiveTab(parsedForm.tabs[0].id)
         }
       } catch (error) {
@@ -64,9 +64,13 @@ export default function FormRenderer() {
       }
 
       if (formData) {
-        formData.tabs.forEach((tab) => {
-          validateElements(tab.elements)
-        })
+        if (formData.useTabs) {
+          formData.tabs.forEach((tab) => {
+            validateElements(tab.elements)
+          })
+        } else {
+          validateElements(formData.elements || [])
+        }
       }
 
       if (!isValid) {
@@ -253,10 +257,10 @@ export default function FormRenderer() {
               maxLength={10}
               type="text" // Keep type="text" for maxLength support
               onInput={(e) => {
-                const input = e.target as HTMLInputElement;
-                input.value = input.value.replace(/\D/g, ""); // Remove non-numeric characters
+                const input = e.target as HTMLInputElement
+                input.value = input.value.replace(/\D/g, "") // Remove non-numeric characters
                 if (input.value.length > 10) {
-                  input.value = input.value.slice(0, 10); // Enforce 10 digits max
+                  input.value = input.value.slice(0, 10) // Enforce 10 digits max
                 }
               }}
             />
@@ -270,18 +274,18 @@ export default function FormRenderer() {
               {element.properties.required && <span className="text-destructive ml-1">*</span>}
             </Label>
             <Input
-            id={element.id}
-            type="url"
-            placeholder={element.properties.placeholder || "Enter URL"}
-            value={formValues[element.id] || ""}
-            onChange={(e) => handleInputChange(element.id, e.target.value)}
-            required={element.properties.required}
-            onInput={(e) => {
-              const input = e.target as HTMLInputElement;
-              // Remove spaces and illegal characters for URLs
-              input.value = input.value.replace(/[^\w\-._~:/?#\[\]@!$&'()*+,;=%]/gi, "");
-            }}
-          />
+              id={element.id}
+              type="url"
+              placeholder={element.properties.placeholder || "Enter URL"}
+              value={formValues[element.id] || ""}
+              onChange={(e) => handleInputChange(element.id, e.target.value)}
+              required={element.properties.required}
+              onInput={(e) => {
+                const input = e.target as HTMLInputElement
+                // Remove spaces and illegal characters for URLs
+                input.value = input.value.replace(/[^\w\-._~:/?#[\]@!$&'()*+,;=%]/gi, "")
+              }}
+            />
           </div>
         )
       case "file":
@@ -318,48 +322,48 @@ export default function FormRenderer() {
       case "header 1":
         return (
           <div className="space-y-1" key={element.id}>
-            <h2 className="text-4xl font-bold">{element.properties.label || "Header 1"}</h2>
-            {element.properties.description && (
-              <p className="text-muted-foreground">{element.properties.description === "Add a description here" && ""}</p>
+            <h2 className="text-4xl font-bold">{element.properties.label || "Header"}</h2>
+            {element.properties.description && element.properties.description !== "Add a description here" && (
+              <p className="text-muted-foreground">{element.properties.description}</p>
             )}
           </div>
         )
-        case "header 2":
-          return (
-            <div className="space-y-1" key={element.id}>
-              <h2 className="text-3xl font-bold">{element.properties.label || "Header 2"}</h2>
-              {element.properties.description && (
-                <p className="text-muted-foreground">{element.properties.description}</p>
-              )}
-            </div>
-          )
-          case "header 3":
-            return (
-              <div className="space-y-1" key={element.id}>
-                <h2 className="text-2xl font-bold">{element.properties.label || "Header 3"}</h2>
-                {element.properties.description && (
-                  <p className="text-muted-foreground">{element.properties.description}</p>
-                )}
-              </div>
-            )
-            case "header 4":
-              return (
-                <div className="space-y-1" key={element.id}>
-                  <h2 className="text-xl font-bold">{element.properties.label || "Header 4"}</h2>
-                  {element.properties.description && (
-                    <p className="text-muted-foreground">{element.properties.description}</p>
-                  )}
-                </div>
-              )
-              case "header 5":
-                return (
-                  <div className="space-y-1" key={element.id}>
-                    <h2 className="text-lg font-bold">{element.properties.label || "Header 5"}</h2>
-                    {element.properties.description && (
-                      <p className="text-muted-foreground">{element.properties.description}</p>
-                    )}
-                  </div>
-                )
+      case "header 2":
+        return (
+          <div className="space-y-1" key={element.id}>
+            <h2 className="text-3xl font-bold">{element.properties.label || "Header"}</h2>
+            {element.properties.description && element.properties.description !== "Add a description here" && (
+              <p className="text-muted-foreground">{element.properties.description}</p>
+            )}
+          </div>
+        )
+      case "header 3":
+        return (
+          <div className="space-y-1" key={element.id}>
+            <h2 className="text-2xl font-bold">{element.properties.label || "Header"}</h2>
+            {element.properties.description && element.properties.description !== "Add a description here" && (
+              <p className="text-muted-foreground">{element.properties.description}</p>
+            )}
+          </div>
+        )
+      case "header 4":
+        return (
+          <div className="space-y-1" key={element.id}>
+            <h2 className="text-xl font-bold">{element.properties.label || "Header"}</h2>
+            {element.properties.description && element.properties.description !== "Add a description here" && (
+              <p className="text-muted-foreground">{element.properties.description}</p>
+            )}
+          </div>
+        )
+      case "header 5":
+        return (
+          <div className="space-y-1" key={element.id}>
+            <h2 className="text-lg font-bold">{element.properties.label || "Header"}</h2>
+            {element.properties.description && element.properties.description !== "Add a description here" && (
+              <p className="text-muted-foreground">{element.properties.description}</p>
+            )}
+          </div>
+        )
       default:
         return <div key={element.id}>Unknown element type</div>
     }
@@ -369,10 +373,10 @@ export default function FormRenderer() {
     return <div className="space-y-6">{tab.elements.map((element) => renderFormElement(element))}</div>
   }
 
-  if (!formData || formData.tabs.length === 0) {
+  if (!formData) {
     return (
       <div className="container p-10">
-        <Card className=" max-w-2xl mx-auto">
+        <Card className="max-w-2xl mx-auto">
           <CardHeader>
             <CardTitle>Form not found</CardTitle>
             <CardDescription>The requested form could not be loaded.</CardDescription>
@@ -387,14 +391,14 @@ export default function FormRenderer() {
 
   return (
     <div className="container p-10">
-      <Card className=" max-w-2xl mx-auto">
+      <Card className="max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle>{formData.title || "Form Submission"}</CardTitle>
-          <CardDescription>Please fill out the form below</CardDescription>
+          <CardDescription>{formData.description || "Please fill out the form below"}</CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
           <CardContent>
-            {formData.tabs.length > 1 ? (
+            {formData.useTabs && formData.tabs.length > 1 ? (
               <Tabs value={activeTab || undefined} onValueChange={setActiveTab} className="w-full">
                 <TabsList className="mb-4">
                   {formData.tabs.map((tab) => (
@@ -410,7 +414,11 @@ export default function FormRenderer() {
                 ))}
               </Tabs>
             ) : (
-              renderTabContent(formData.tabs[0])
+              <div className="space-y-6">
+                {formData.useTabs && formData.tabs.length > 0
+                  ? formData.tabs[0].elements.map((element) => renderFormElement(element))
+                  : (formData.elements || []).map((element) => renderFormElement(element))}
+              </div>
             )}
           </CardContent>
           <CardFooter className="flex justify-between">

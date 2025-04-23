@@ -50,11 +50,11 @@ function FieldItem({ id, label, icon }: FieldItemProps) {
 
 export function FieldsPanel() {
   const fields = [
-    { id: "new-header 1", label: "Header 1", icon: <Type className="h-4 w-4" strokeWidth={5.5}/> },
-    { id: "new-header 2", label: "Header 2", icon: <Type className="h-4 w-4 font-bold" strokeWidth={4.5} /> },
-    { id: "new-header 3", label: "Header 3", icon: <Type className="h-4 w-4 font-bold" strokeWidth={3.5}/> },
-    { id: "new-header 4", label: "Header 4", icon: <Type className="h-4 w-4 font-bold" strokeWidth={2.5}/> },
-    { id: "new-header 5", label: "Header 5", icon: <Type className="h-4 w-4 font-bold" /> },
+    { id: "new-header_1", label: "Header 1", icon: <Type className="h-4 w-4" strokeWidth={5.5}/> },
+    { id: "new-header_2", label: "Header 2", icon: <Type className="h-4 w-4 font-bold" strokeWidth={4.5} /> },
+    { id: "new-header_3", label: "Header 3", icon: <Type className="h-4 w-4 font-bold" strokeWidth={3.5}/> },
+    { id: "new-header_4", label: "Header 4", icon: <Type className="h-4 w-4 font-bold" strokeWidth={2.5}/> },
+    { id: "new-header_5", label: "Header 5", icon: <Type className="h-4 w-4 font-bold" /> },
     { id: "new-input", label: "Text Input", icon: <FormInput className="h-4 w-4" /> },
     { id: "new-textarea", label: "Text Area", icon: <FileText className="h-4 w-4" /> },
     { id: "new-checkbox", label: "Checkbox", icon: <CheckSquare className="h-4 w-4" /> },
