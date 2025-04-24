@@ -22,6 +22,8 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { SignaturePad } from "@/components/signature-pad";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { cn } from "@/lib/utils";
 
 export default function FormRenderer() {
   const [formData, setFormData] = useState<FormData | null>(null);
@@ -31,6 +33,33 @@ export default function FormRenderer() {
   const { toast } = useToast();
   const router = useRouter();
   const signatureRefs = useRef<Record<string, any>>({});
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+const validateFiles = (element: any, files: FileList | null) => {
+  const maxFiles = element.properties.maxFiles || Infinity;
+  const maxSize = element.properties.maxSize || Infinity; // in MB
+console.log(`Max Size : ${maxSize}, Max Files ${maxFiles}`)
+  if (!files) return;
+
+  const fileArray = Array.from(files);
+
+  if (fileArray.length > maxFiles) {
+    return `You can upload up to ${maxFiles} file(s).`;
+  }
+
+  for (const file of fileArray) {
+    const fileSizeMB = file.size / (1024 * 1024);
+    if (fileSizeMB > maxSize) {
+      return `Each file must be under ${maxSize}MB.`;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      return "Only image files are allowed.";
+    }
+  }
+
+  return null; // no error
+};
 
   useEffect(() => {
     // Load form data from localStorage
@@ -210,18 +239,21 @@ export default function FormRenderer() {
             </Label>
             <select
               id={element.id}
-              className="w-full p-2 border rounded-md bg-background"
+              className={cn(
+              "w-full p-2 border rounded-md text-sm bg-background",
+              !formValues[element.id] && "text-muted-foreground"
+              )}
               value={formValues[element.id] || ""}
               onChange={(e) => handleInputChange(element.id, e.target.value)}
               required={element.properties.required}
             >
               <option value="">
-                {element.properties.placeholder || "Select an option"}
+              {element.properties.placeholder || "Select an option"}
               </option>
               {element.properties.options?.map((option, index) => (
-                <option key={index} value={option}>
-                  {option}
-                </option>
+              <option key={index} value={option} className=" text-primary">
+                {option}
+              </option>
               ))}
             </select>
           </div>
@@ -319,7 +351,6 @@ export default function FormRenderer() {
               id={`preview-${element.id}`}
               name={`preview-${element.id}`}
               placeholder={element.properties.placeholder || "Enter email id"}
-              className="h-8 text-xs"
               required={element.properties.required}
               value={formValues[element.id] || ""}
               onChange={(e) => handleInputChange(element.id, e.target.value)}
@@ -373,34 +404,48 @@ export default function FormRenderer() {
             />
           </div>
         );
-      case "image":
-        return (
-          <div className="space-y-2" key={element.id}>
-            <Label htmlFor={element.id}>
-              {element.properties.label || "Image Upload"}
-              {element.properties.required && (
-                <span className="text-destructive ml-1">*</span>
+        case "image":
+          return (
+            <div className="space-y-2" key={element.id}>
+              <Label htmlFor={element.id}>
+                {element.properties.label || "Image Upload"}
+                {element.properties.required && (
+                  <span className="text-destructive ml-1">*</span>
+                )}
+              </Label>
+        
+              <Input
+                id={element.id}
+                type="file"
+                accept="image/*"
+                multiple={element.properties.multiple}
+                onChange={(e) => {
+                  const files = e.target.files;
+                  const errorMsg = validateFiles(element, files);
+                  setErrors((prev) => ({ ...prev, [element.id]: errorMsg || "" }));
+        
+                  if (!errorMsg) {
+                    handleInputChange(element.id, files);
+                  } else {
+                    handleInputChange(element.id, null); // reset if invalid
+                  }
+                }}
+                required={element.properties.required}
+              />
+        
+             
+        
+              {errors[element.id] ? (
+                <p className="text-xs text-destructive">{errors[element.id]}</p>
+              ) :  element.properties.multiple && (
+                <p className="text-xs text-muted-foreground">
+                  Max: {element.properties.maxFiles || "unlimited"} file(s)
+                  {element.properties.maxSize &&
+                    `, ${element.properties.maxSize}MB each`}
+                </p>
               )}
-            </Label>
-            <Input
-              id={element.id}
-              type="file"
-              accept="image/*"
-              multiple={element.properties.multiple}
-              onChange={(e) =>
-                handleInputChange(element.id, e.target.files || null)
-              }
-              required={element.properties.required}
-            />
-            {element.properties.multiple && (
-              <p className="text-xs text-muted-foreground">
-                Max: {element.properties.maxFiles || "unlimited"} files
-                {element.properties.maxSize &&
-                  `, ${element.properties.maxSize}MB each`}
-              </p>
-            )}
-          </div>
-        );
+            </div>
+          );
       case "signature":
         return (
           <div className="space-y-2" key={element.id}>
@@ -496,15 +541,16 @@ export default function FormRenderer() {
                 onValueChange={setActiveTab}
                 className="w-full"
               >
-                <div className="w-full overflow-x-auto">
-                  <TabsList className="mb-4 flex w-max">
+                <ScrollArea className="w-full">
+                  <TabsList className="mb-4 flex w-max gap-3">
                     {formData.tabs.map((tab) => (
                       <TabsTrigger key={tab.id} value={tab.id}>
                         {tab.title}
                       </TabsTrigger>
                     ))}
                   </TabsList>
-                </div>
+                  <ScrollBar orientation="horizontal" />
+                </ScrollArea>
                 {formData.tabs.map((tab) => (
                   <TabsContent key={tab.id} value={tab.id}>
                     {renderTabContent(tab)}
@@ -527,11 +573,12 @@ export default function FormRenderer() {
             <Button
               variant="outline"
               type="button"
+              size="sm"
               onClick={() => router.push("/")}
             >
               Cancel
             </Button>
-            <Button type="submit" disabled={isSubmitting}>
+            <Button type="submit" size="sm" disabled={isSubmitting}>
               {isSubmitting ? "Submitting..." : "Submit"}
             </Button>
           </CardFooter>

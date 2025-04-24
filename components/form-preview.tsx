@@ -37,7 +37,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import { SignaturePad } from "./signature-pad";
@@ -498,7 +498,7 @@ export function FormPreview() {
             value={formTitle}
             onChange={(e) => setFormTitle(e.target.value)}
             placeholder="Enter form title"
-            className="text-lg font-semibold focus:outline-none focus:ring-0 focus:border-none w-full cursor-pointer"
+            className="text-lg font-semibold focus:outline-none focus:ring-0 focus:border-none w-full cursor-pointer hover:underline"
           />
           <textarea
             ref={textareaRef}
@@ -506,7 +506,7 @@ export function FormPreview() {
             value={formDescription}
             onChange={handleDescriptionChange}
             placeholder="Enter form description"
-            className="h-auto resize-none overflow-hidden text-sm w-full text-muted-foreground focus:outline-none focus:ring-0 focus:border-none"
+            className="h-auto resize-none overflow-hidden text-sm w-full text-muted-foreground focus:outline-none focus:ring-0 focus:border-none hover:underline cursor-pointer"
           />
         </div>
 
@@ -522,8 +522,8 @@ export function FormPreview() {
               onValueChange={handleTabChange}
               className="w-full relative"
             >
-              <div className="flex items-center w-[92%] mb-4 overflow-x-auto">
-                <TabsList className="flex-1 w-max">
+              <ScrollArea className=" flex items-center w-[94%] mb-4 rounded-md">
+                <TabsList className="flex-1 w-full gap-2">
                   {formTabs.map((tab) => (
                     <TabsTrigger
                       key={tab.id}
@@ -549,7 +549,7 @@ export function FormPreview() {
                           <span className="group-hover:underline">
                             {tab.title}
                           </span>
-                          <div className="ml-2 opacity-0 group-hover:opacity-100 flex">
+                          <div className="ml-3 opacity-0 group-hover:opacity-100 flex gap-1">
                             <Button
                               variant="ghost"
                               size="icon"
@@ -604,15 +604,16 @@ export function FormPreview() {
                     </TabsTrigger>
                   ))}
                 </TabsList>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  onClick={handleAddTab}
-                  className=" absolute right-0 top-0"
-                >
-                  <Plus className="h-4 w-4" />
-                </Button>
-              </div>
+                <ScrollBar orientation="horizontal" />
+              </ScrollArea>
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handleAddTab}
+                className=" absolute right-0 top-0"
+              >
+                <Plus className="h-4 w-4" />
+              </Button>
 
               <ScrollArea className="h-[calc(100vh-16rem)]">
                 {formTabs.map((tab) => (

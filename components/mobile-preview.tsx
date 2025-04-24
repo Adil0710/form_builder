@@ -11,6 +11,8 @@ import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 import SignaturePad from "./signature-pad";
+import { cn } from "@/lib/utils";
+import { ScrollArea, ScrollBar } from "./ui/scroll-area";
 
 export function MobilePreview() {
   const formTabs = useFormBuilderStore((state) => state.formTabs);
@@ -233,7 +235,7 @@ export function MobilePreview() {
               id={element.id}
               type="email"
               placeholder={element.properties.placeholder || "Enter email id"}
-              className="w-[90%]"
+             className="h-8 text-xs"
             />
           </div>
         );
@@ -345,6 +347,14 @@ export function MobilePreview() {
     }
   };
 
+  const tabSpacing = formTabs.length <= 3 ? "gap-6" : "gap-4";
+
+  // Calculate line width based on number of tabs and their position
+  const lineWidthPercent = Math.min(
+    85, // Maximum width percentage
+    Math.max(30, (formTabs.length - 1) * 15) // At least 30% width, 15% per tab connection
+  );
+
   return (
     <div className="p-4 flex justify-center items-center">
       <div className="w-64 h-[500px] border rounded-[20px] overflow-hidden flex flex-col bg-background shadow-md mt-5">
@@ -364,34 +374,59 @@ export function MobilePreview() {
               onValueChange={setActivePreviewTab}
               className="w-full"
             >
-              <div className="w-full overflow-x-auto">
-                <TabsList className="flex w-max mb-2 h-8">
+              <ScrollArea className="w-full rounded-md flex items-center">
+                <TabsList className={cn("flex w-full mb-2 h-8 gap-4 relative bg-transparent", tabSpacing)}>
+                <div
+              className="h-px z-0 bg-primary absolute left-1/2 -translate-x-1/2 top-1/2 -translate-y-1/2"
+              style={{ width: `${lineWidthPercent}%` }}
+            ></div>
+
                   {formTabs.map((tab) => (
                     <TabsTrigger
                       key={tab.id}
                       value={tab.id}
-                      className="text-xs h-6 whitespace-nowrap"
+                      className={cn(
+                        "text-xs z-10 h-6 w-6 px-0 bg-muted border rounded-full whitespace-nowrap relative flex items-center gap-2",
+                        tab.id === currentTabId && "border-primary "
+                      )}
                     >
-                      {tab.title}
+                      <div
+                        className={cn(
+                          "w-2 h-2 rounded-full z-20",
+                          tab.id === currentTabId
+                            ? "bg-primary"
+                            : "bg-muted-foreground/50"
+                        )}
+                      ></div>
                     </TabsTrigger>
                   ))}
                 </TabsList>
-              </div>
+                <ScrollBar orientation="horizontal" />
+              </ScrollArea>
 
+              {/* Current tab title shown here */}
+              <p className="text-sm font-medium text-primary my-2 bg-muted rounded-md w-full text-center">
+                {formTabs.find((tab) => tab.id === currentTabId)?.title}
+              </p>
+              <ScrollArea >
               {formTabs.map((tab) => (
+               
                 <TabsContent
                   key={tab.id}
                   value={tab.id}
-                  className="mt-0 data-[state=active]:overflow-auto h-[360px] pb-16"
+                  className="mt-0 h-[270px]"
                 >
                   <div className="space-y-3 p-2">
                     {tab.elements.map((element) => renderFormElement(element))}
                   </div>
                 </TabsContent>
+               
               ))}
+               </ScrollArea>
             </Tabs>
           ) : (
-            <div className="h-[400px] overflow-auto">
+            <ScrollArea >
+            <div className="h-[400px]">
               <div className="space-y-3 p-2 pb-16">
                 {useTabs && formTabs.length > 0
                   ? formTabs[0]?.elements.map((element) =>
@@ -400,6 +435,7 @@ export function MobilePreview() {
                   : formElements.map((element) => renderFormElement(element))}
               </div>
             </div>
+            </ScrollArea>
           )}
         </div>
         <div className="h-10 bg-muted flex items-center justify-center rounded-b-[20px]">

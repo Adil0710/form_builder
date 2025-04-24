@@ -13,8 +13,17 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
-import { MoonIcon, SunIcon, ExternalLink, Trash2, X, Settings } from "lucide-react";
-
+import { ExternalLink, Trash2, X, Settings, Columns3 } from "lucide-react";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { useFormBuilderStore } from "@/lib/store";
 
 import { Button } from "@/components/ui/button";
@@ -67,8 +76,8 @@ export function FormBuilder() {
     addFormTab,
   } = useFormBuilderStore();
 
-  const [showFormSettings, setShowFormSettings] = useState(false);
-  const settingsRef = useRef<HTMLDivElement>(null);
+  // const [showFormSettings, setShowFormSettings] = useState(false);
+  // const settingsRef = useRef<HTMLDivElement>(null);
 
   const sensors = useSensors(
     useSensor(MouseSensor, {
@@ -219,16 +228,18 @@ export function FormBuilder() {
         <div className="w-full flex items-center justify-between h-16 px-16">
           <h1 className="text-xl font-bold">Form Builder</h1>
           <div className="flex items-center gap-4">
-            
-           
-            <Button onClick={handleSaveForm} size="sm">Save Form</Button>
+            <Button onClick={handleSaveForm} size="sm">
+              Save Form
+            </Button>
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive" size="sm">Clear Form</Button>
+                <Button variant="destructive" size="sm">
+                  Clear Form
+                </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Clear Form</AlertDialogTitle>
+                  <AlertDialogTitle>Clear Form ?</AlertDialogTitle>
                   <AlertDialogDescription>
                     Are you sure you want to clear the &quot;
                     {formTitle}&quot; form? This action cannot be undone.
@@ -246,31 +257,61 @@ export function FormBuilder() {
               </AlertDialogContent>
             </AlertDialog>
 
-            <Separator orientation="vertical" className=" h-8"/>
+            <Separator orientation="vertical" className=" h-8" />
+            <Dialog>
+              <DialogTrigger asChild>
+                <Button variant="outline" size="sm">
+                  {" "}
+                  <Settings className=" w-4 h-4" />
+                  Form Settings
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-[425px]">
+                <DialogHeader>
+                  <DialogTitle>Form Settings</DialogTitle>
+                  <DialogDescription>
+                    You can change the form settings here.
+                  </DialogDescription>
+                </DialogHeader>
+                <div className=" flex items-center space-x-4 rounded-md border p-4 my-2">
+                <Columns3 />
+                  <div className="flex-1 space-y-1">
+                  
+                    <Label htmlFor="use-tabs" className="text-sm font-medium leading-none">Use Tabs / Sections</Label>
+                    <p className="text-sm text-muted-foreground">
+                      Create multiple tabs or sections.
+                    </p>
+                  </div>
+                  <Switch
+                      id="use-tabs"
+                      checked={useTabs}
+                      onCheckedChange={handleToggleTabs}
+                    />
+                </div>
 
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowFormSettings(!showFormSettings)}
-            >
-              <Settings className=" w-4 h-4"/>
-              Form Settings
-            </Button>
-          
+                <DialogFooter className="sm:justify-start">
+                  <DialogClose asChild>
+                    <Button type="button" variant="secondary" size="sm">
+                      Close
+                    </Button>
+                  </DialogClose>
+                </DialogFooter>
+              </DialogContent>
+            </Dialog>
+
             <Button variant="outline" size="sm" onClick={handlePreviewForm}>
               <ExternalLink className="h-4 w-4" />
               Preview Form
             </Button>
 
-            <Separator orientation="vertical" className=" h-8"/>
+            <Separator orientation="vertical" className=" h-8" />
 
             <ModeToggle />
-
           </div>
         </div>
       </header>
 
-      <AnimatePresence mode="wait">
+      {/* <AnimatePresence mode="wait">
         {showFormSettings && (
           <motion.div
             initial={{ opacity: 0, height: 0 }}
@@ -324,7 +365,7 @@ export function FormBuilder() {
             </div>
           </motion.div>
         )}
-      </AnimatePresence>
+      </AnimatePresence> */}
 
       <div className="flex flex-1 overflow-hidden">
         <DndContext
