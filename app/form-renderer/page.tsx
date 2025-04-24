@@ -410,7 +410,7 @@ export default function FormRenderer() {
                 <span className="text-destructive ml-1">*</span>
               )}
             </Label>
-            <SignaturePad className=" h-32"/>
+            <SignaturePad className=" h-32" />
           </div>
         );
       case "header": {
@@ -496,13 +496,15 @@ export default function FormRenderer() {
                 onValueChange={setActiveTab}
                 className="w-full"
               >
-                <TabsList className="mb-4">
-                  {formData.tabs.map((tab) => (
-                    <TabsTrigger key={tab.id} value={tab.id}>
-                      {tab.title}
-                    </TabsTrigger>
-                  ))}
-                </TabsList>
+                <div className="w-full overflow-x-auto">
+                  <TabsList className="mb-4 flex w-max">
+                    {formData.tabs.map((tab) => (
+                      <TabsTrigger key={tab.id} value={tab.id}>
+                        {tab.title}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                </div>
                 {formData.tabs.map((tab) => (
                   <TabsContent key={tab.id} value={tab.id}>
                     {renderTabContent(tab)}

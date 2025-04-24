@@ -382,7 +382,7 @@ export function MobilePreview() {
                 <TabsContent
                   key={tab.id}
                   value={tab.id}
-                  className="mt-0 data-[state=active]:overflow-auto h-[370px] pb-16"
+                  className="mt-0 data-[state=active]:overflow-auto h-[360px] pb-16"
                 >
                   <div className="space-y-3 p-2">
                     {tab.elements.map((element) => renderFormElement(element))}

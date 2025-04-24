@@ -19,7 +19,17 @@ import {
   X,
   Edit,
 } from "lucide-react";
-
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "./ui/alert-dialog";
 import type { FormElement, FormTab } from "@/lib/types";
 import { useFormBuilderStore } from "@/lib/store";
 import { cn } from "@/lib/utils";
@@ -475,13 +485,8 @@ export function FormPreview() {
 
   const handleDeleteTab = (id: string, e: React.MouseEvent) => {
     e.stopPropagation();
-    if (
-      confirm(
-        "Are you sure you want to delete this tab? All fields in this tab will be lost."
-      )
-    ) {
-      removeTab(id);
-    }
+
+    removeTab(id);
   };
 
   return (
@@ -556,14 +561,42 @@ export function FormPreview() {
                               <Edit className="h-3 w-3" />
                             </Button>
                             {formTabs.length > 1 && (
-                              <Button
-                                variant="ghost"
-                                size="icon"
-                                className="h-5 w-5 p-0 text-destructive"
-                                onClick={(e) => handleDeleteTab(tab.id, e)}
-                              >
-                                <X className="h-3 w-3" />
-                              </Button>
+                              <AlertDialog>
+                                <AlertDialogTrigger asChild>
+                                  <Button
+                                    variant="ghost"
+                                    size="icon"
+                                    className="h-5 w-5 p-0 text-red-400 hover:text-red-500"
+                                  >
+                                    <X className="h-3 w-3" />
+                                  </Button>
+                                </AlertDialogTrigger>
+                                <AlertDialogContent>
+                                  <AlertDialogHeader>
+                                    <AlertDialogTitle>
+                                      Delete Tab
+                                    </AlertDialogTitle>
+                                    <AlertDialogDescription>
+                                      Are you sure you want to delete the &quot;
+                                      {tab.title}&quot; tab? This action cannot
+                                      be undone.
+                                    </AlertDialogDescription>
+                                  </AlertDialogHeader>
+                                  <AlertDialogFooter>
+                                    <AlertDialogCancel>
+                                      Cancel
+                                    </AlertDialogCancel>
+                                    <AlertDialogAction
+                                      onClick={(e) =>
+                                        handleDeleteTab(tab.id, e)
+                                      }
+                                      className="bg-red-500 hover:bg-red-400"
+                                    >
+                                      Delete
+                                    </AlertDialogAction>
+                                  </AlertDialogFooter>
+                                </AlertDialogContent>
+                              </AlertDialog>
                             )}
                           </div>
                         </div>

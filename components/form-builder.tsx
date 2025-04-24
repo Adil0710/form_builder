@@ -13,7 +13,7 @@ import {
   useSensors,
 } from "@dnd-kit/core";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
-import { MoonIcon, SunIcon, ExternalLink, Trash2, X } from "lucide-react";
+import { MoonIcon, SunIcon, ExternalLink, Trash2, X, Settings } from "lucide-react";
 
 import { useFormBuilderStore } from "@/lib/store";
 
@@ -219,22 +219,12 @@ export function FormBuilder() {
         <div className="w-full flex items-center justify-between h-16 px-16">
           <h1 className="text-xl font-bold">Form Builder</h1>
           <div className="flex items-center gap-4">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setShowFormSettings(!showFormSettings)}
-            >
-              Form Settings
-            </Button>
-            <ModeToggle />
-            <Button variant="outline" onClick={handlePreviewForm}>
-              <ExternalLink className="h-4 w-4 mr-2" />
-              Preview Form
-            </Button>
-            <Button onClick={handleSaveForm}>Save Form</Button>
+            
+           
+            <Button onClick={handleSaveForm} size="sm">Save Form</Button>
             <AlertDialog>
               <AlertDialogTrigger asChild>
-                <Button variant="destructive">Clear Form</Button>
+                <Button variant="destructive" size="sm">Clear Form</Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
@@ -255,6 +245,27 @@ export function FormBuilder() {
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
+
+            <Separator orientation="vertical" className=" h-8"/>
+
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => setShowFormSettings(!showFormSettings)}
+            >
+              <Settings className=" w-4 h-4"/>
+              Form Settings
+            </Button>
+          
+            <Button variant="outline" size="sm" onClick={handlePreviewForm}>
+              <ExternalLink className="h-4 w-4" />
+              Preview Form
+            </Button>
+
+            <Separator orientation="vertical" className=" h-8"/>
+
+            <ModeToggle />
+
           </div>
         </div>
       </header>
