@@ -18,6 +18,7 @@ export function MobilePreview() {
   const useTabs = useFormBuilderStore((state) => state.useTabs);
   const activeTabId = useFormBuilderStore((state) => state.activeTabId);
   const [activePreviewTab, setActivePreviewTab] = useState<string | null>(null);
+  const { formTitle, formDescription } = useFormBuilderStore();
 
   // Set the active preview tab once when component mounts or when activeTabId changes
   useEffect(() => {
@@ -350,29 +351,38 @@ export function MobilePreview() {
         <div className="h-6 bg-muted flex items-center justify-center rounded-t-[20px]">
           <div className="w-20 h-2 bg-background rounded-full" />
         </div>
-        <div className="flex-1 overflow-hidden p-2">
+        <div className="flex-1 overflow-hidden p-2 ">
+          <div className=" p-2 space-y-1 mb-1">
+            <h1 className=" font-semibold text-xl">{formTitle || "My Form"}</h1>
+            <p className=" text-xs text-muted-foreground">
+              {formDescription || "Please fill out the form below"}
+            </p>
+          </div>
           {useTabs && formTabs.length > 1 ? (
             <Tabs
               value={currentTabId || undefined}
               onValueChange={setActivePreviewTab}
               className="w-full"
             >
-              <TabsList className="w-full mb-2 h-8">
-                {formTabs.map((tab) => (
-                  <TabsTrigger
-                    key={tab.id}
-                    value={tab.id}
-                    className="text-xs h-6"
-                  >
-                    {tab.title}
-                  </TabsTrigger>
-                ))}
-              </TabsList>
+              <div className="w-full overflow-x-auto">
+                <TabsList className="flex w-max mb-2 h-8">
+                  {formTabs.map((tab) => (
+                    <TabsTrigger
+                      key={tab.id}
+                      value={tab.id}
+                      className="text-xs h-6 whitespace-nowrap"
+                    >
+                      {tab.title}
+                    </TabsTrigger>
+                  ))}
+                </TabsList>
+              </div>
+
               {formTabs.map((tab) => (
                 <TabsContent
                   key={tab.id}
                   value={tab.id}
-                  className="mt-0 data-[state=active]:overflow-auto h-[430px] pb-14"
+                  className="mt-0 data-[state=active]:overflow-auto h-[370px] pb-16"
                 >
                   <div className="space-y-3 p-2">
                     {tab.elements.map((element) => renderFormElement(element))}
@@ -381,8 +391,8 @@ export function MobilePreview() {
               ))}
             </Tabs>
           ) : (
-            <div className="h-[430px] overflow-auto">
-              <div className="space-y-3 p-2 pb-14">
+            <div className="h-[400px] overflow-auto">
+              <div className="space-y-3 p-2 pb-16">
                 {useTabs && formTabs.length > 0
                   ? formTabs[0]?.elements.map((element) =>
                       renderFormElement(element)
