@@ -490,15 +490,15 @@ export function FormPreview() {
   };
 
   return (
-    <div className="flex-1 p-4 bg-muted/10">
-      <div className="max-w-2xl mx-auto">
-        <div className="bg-card rounded-lg shadow-sm border p-4 mb-4">
+    <div className="flex-1 p-4 bg-background">
+      <div className="max-w-2xl mx-auto bg-background">
+        <div className="bg-muted/50 rounded-lg shadow-sm border p-4 mb-4">
           <input
             id="form-title"
             value={formTitle}
             onChange={(e) => setFormTitle(e.target.value)}
             placeholder="Enter form title"
-            className="text-lg font-semibold focus:outline-none focus:ring-0 focus:border-none w-full cursor-pointer hover:underline"
+            className="text-lg font-semibold bg-transparent  focus:outline-none focus:ring-0 focus:border-none w-full cursor-pointer hover:underline"
           />
           <textarea
             ref={textareaRef}
@@ -506,7 +506,7 @@ export function FormPreview() {
             value={formDescription}
             onChange={handleDescriptionChange}
             placeholder="Enter form description"
-            className="h-auto resize-none overflow-hidden text-sm w-full text-muted-foreground focus:outline-none focus:ring-0 focus:border-none hover:underline cursor-pointer"
+            className="h-auto resize-none overflow-hidden text-sm w-full text-muted-foreground focus:outline-none focus:ring-0 focus:border-none hover:underline cursor-pointer bg-transparent"
           />
         </div>
 
@@ -522,7 +522,7 @@ export function FormPreview() {
               onValueChange={handleTabChange}
               className="w-full relative"
             >
-              <ScrollArea className=" flex items-center w-[94%] mb-4 rounded-md">
+              <ScrollArea className=" flex items-center w-[92%] mb-4 rounded-md">
                 <TabsList className="flex-1 w-full gap-2">
                   {formTabs.map((tab) => (
                     <TabsTrigger

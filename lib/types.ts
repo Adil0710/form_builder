@@ -31,4 +31,6 @@ export interface FormData {
   tabs: FormTab[]
   elements?: FormElement[] // For single-page forms without tabs
   useTabs: boolean
+  theme?: string
+  font?: string
 }

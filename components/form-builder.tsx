@@ -52,6 +52,7 @@ import {
 } from "./ui/alert-dialog";
 import { PreviewPanel } from "./preview-panel";
 import { ModeToggle } from "./mode-toggle";
+import { FormSettingsDialog } from "./form-settings-dialog";
 
 export function FormBuilder() {
   const { toast } = useToast();
@@ -258,7 +259,7 @@ export function FormBuilder() {
             </AlertDialog>
 
             <Separator orientation="vertical" className=" h-8" />
-            <Dialog>
+            {/* <Dialog>
               <DialogTrigger asChild>
                 <Button variant="outline" size="sm">
                   {" "}
@@ -297,7 +298,8 @@ export function FormBuilder() {
                   </DialogClose>
                 </DialogFooter>
               </DialogContent>
-            </Dialog>
+            </Dialog> */}
+            <FormSettingsDialog/>
 
             <Button variant="outline" size="sm" onClick={handlePreviewForm}>
               <ExternalLink className="h-4 w-4" />

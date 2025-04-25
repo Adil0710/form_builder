@@ -4,6 +4,9 @@ import { create } from "zustand"
 import { v4 as uuidv4 } from "uuid"
 
 import type { FormData, FormElement, FormTab } from "./types"
+import type { ThemeOption } from "./theme-config"
+import { themes, fonts } from "@/components/theme-preview"
+import type { FontOption } from "@/components/theme-preview"
 
 interface FormBuilderState {
   formTabs: FormTab[]
@@ -11,9 +14,11 @@ interface FormBuilderState {
   formTitle: string
   formDescription: string
   useTabs: boolean
+  activeId: string | null
   activeTabId: string | null
   selectedElementId: string | null
-  activeId: string | null
+  selectedTheme: ThemeOption
+  selectedFont: FontOption
 
   setFormTabs: (tabs: FormTab[]) => void
   setFormElements: (elements: FormElement[]) => void
@@ -38,6 +43,8 @@ interface FormBuilderState {
   loadForm: (formData: FormData) => void
   clearForm: () => void
   findElementById: (id: string) => { element: FormElement | null; tabId: string | null }
+  setSelectedTheme: (theme: ThemeOption) => void
+  setSelectedFont: (font: FontOption) => void
 }
 
 export const useFormBuilderStore = create<FormBuilderState>((set, get) => ({
@@ -49,6 +56,8 @@ export const useFormBuilderStore = create<FormBuilderState>((set, get) => ({
   activeTabId: null,
   selectedElementId: null,
   activeId: null,
+  selectedTheme: themes[0], // Default theme
+  selectedFont: fonts[0], // Default font
 
   setFormTabs: (tabs) => set({ formTabs: tabs }),
   setFormElements: (elements) => set({ formElements: elements }),
@@ -282,6 +291,8 @@ export const useFormBuilderStore = create<FormBuilderState>((set, get) => ({
       tabs: get().formTabs,
       elements: get().formElements,
       useTabs: get().useTabs,
+      theme: get().selectedTheme.name, // Save theme name
+      font: get().selectedFont.name, // Save font name
     }
     return formData
   },
@@ -294,6 +305,20 @@ export const useFormBuilderStore = create<FormBuilderState>((set, get) => ({
     const title = formData.title || "My Form"
     const description = formData.description || "Please fill out the form below"
 
+    // Load theme and font if specified
+    let theme = themes[0]
+    let font = fonts[0]
+
+    if (formData.theme) {
+      const foundTheme = themes.find((t) => t.name === formData.theme)
+      if (foundTheme) theme = foundTheme
+    }
+
+    if (formData.font) {
+      const foundFont = fonts.find((f) => f.name === formData.font)
+      if (foundFont) font = foundFont
+    }
+
     set({
       formTabs: tabs,
       formElements: elements,
@@ -302,6 +327,8 @@ export const useFormBuilderStore = create<FormBuilderState>((set, get) => ({
       useTabs,
       activeTabId: tabs.length > 0 ? tabs[0].id : null,
       selectedElementId: null,
+      selectedTheme: theme,
+      selectedFont: font,
     })
   },
 
@@ -314,6 +341,7 @@ export const useFormBuilderStore = create<FormBuilderState>((set, get) => ({
       useTabs: false,
       activeTabId: null,
       selectedElementId: null,
+      // Don't reset theme and font when clearing form
     })
     localStorage.removeItem("savedForm")
   },
@@ -335,5 +363,15 @@ export const useFormBuilderStore = create<FormBuilderState>((set, get) => ({
       }
     }
     return { element: null, tabId: null }
+  },
+
+  setSelectedTheme: (theme) => {
+    set({ selectedTheme: theme })
+    localStorage.setItem("selectedThemeName", theme.name)
+  },
+
+  setSelectedFont: (font) => {
+    set({ selectedFont: font })
+    localStorage.setItem("selectedFontName", font.name)
   },
 }))

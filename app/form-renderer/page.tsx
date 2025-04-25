@@ -496,7 +496,7 @@ export default function FormRenderer() {
 
   if (!formData) {
     return (
-      <div className="container p-10">
+      <div className="container p-10 bg-muted/20">
         <Card className="max-w-2xl mx-auto">
           <CardHeader>
             <CardTitle>Form not found</CardTitle>
@@ -511,7 +511,7 @@ export default function FormRenderer() {
   }
 
   return (
-    <div className="container p-10">
+    <div className="container p-10 bg-muted/20">
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle>{formData.title || "Form Submission"}</CardTitle>
